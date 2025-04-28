@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Adventure Kingdom</title>
+
+  <!-- AOS for scroll animations -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="/css/style.css">
+
+  <style>
+    :root {
+      --bg-light: #ffffff;
+      --bg-dark: #1e1e1e;
+      --text-light: #2c3e50;
+      --text-dark: #f0f0f0;
+      --main-bg: radial-gradient(circle at top, #e1f5fe, #ffffff);
+      --main-bg-dark: #121212;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      background: transparent;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 2000;
+    }
+
+    #backToTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 1.6rem;
+      background: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 48px;
+      height: 48px;
+      display: none;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+      cursor: pointer;
+      transition: background 0.3s ease-in-out, transform 0.2s;
+    }
+
+    #backToTop:hover {
+      background: #005fa3;
+      transform: scale(1.05);
+    }
+
+    body.dark-mode {
+      background: var(--main-bg-dark);
+      color: var(--text-dark);
+    }
+
+    body.dark-mode header {
+      background: linear-gradient(90deg, #222, #444);
+    }
+
+    body.dark-mode main {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    body.dark-mode nav a {
+      color: #f0f0f0;
+    }
+
+    body.dark-mode nav a:hover {
+      color: #ffee58;
+    }
+
+    body.dark-mode .area {
+      background: #2a2a2a;
+      border-left-color: #00cfff;
+      color: #e0e0e0;
+    }
+
+    body.dark-mode footer {
+      background: #222;
+      border-top-color: #111;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Dark mode toggle -->
+<button id="themeToggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+
+<header>
+  <h1>Adventure Kingdom</h1>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/areas">Themed Areas</a>
+    <a href="/faq">FAQ</a>
+    <a href="/contact">Contact Us</a>
+  </nav>
+</header>
+
+<!-- Scroll to Top Button -->
+<button id="backToTop" title="Back to top">↑</button>
+
+<!-- AOS Script -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>AOS.init();</script>
+
+<!-- Theme and Scroll Script -->
+<script>
+  const toggle = document.getElementById("themeToggle");
+  const body = document.body;
+  const backToTop = document.getElementById("backToTop");
+
+  // Check for theme preference in localStorage on page load
+  if (localStorage.getItem("dark-mode") === "true") {
+    body.classList.add("dark-mode");
+    toggle.textContent = "☀️";  // Dark mode is on, so show sun icon
+  } else {
+    toggle.textContent = "🌙";  // Light mode is on, so show moon icon
+  }
+
+  // Toggle dark mode and save preference in localStorage
+  toggle.addEventListener("click", () => {
+    const isDarkMode = body.classList.toggle("dark-mode");
+    localStorage.setItem("dark-mode", isDarkMode);  // Save preference
+    toggle.textContent = isDarkMode ? "☀️" : "🌙";  // Toggle button icon
+  });
+
+  // Scroll to Top Button Logic
+  backToTop.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  window.addEventListener("scroll", () => {
+    backToTop.style.display = window.scrollY > 300 ? "block" : "none";
+  });
+</script>
+</body>
+</html>
